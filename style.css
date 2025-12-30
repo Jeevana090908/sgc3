@@ -1,0 +1,487 @@
+:root {
+    --bg-color: #050510;
+    /* Very dark blue/black */
+    --card-bg: #111526;
+    /* Slightly lighter for cards */
+    --text-color: #e2e8f0;
+    /* Light gray text */
+    --text-muted: #94a3b8;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
+    --border-color: #1e293b;
+    --input-bg: #0f172a;
+
+    --grad-1: linear-gradient(135deg, #3b82f6 0%, #2dd4bf 100%);
+    --grad-2: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+    --grad-3: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+    position: relative;
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.highlight {
+    color: var(--accent-blue);
+}
+
+.nav-btn {
+    background: transparent;
+    border: 1px solid var(--accent-pink);
+    color: var(--accent-pink);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-btn:hover {
+    background: var(--accent-pink);
+    color: white;
+}
+
+/* Pages */
+.page {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Intro Page */
+.intro-content {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.main-title {
+    font-size: 3rem;
+    background: var(--grad-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+}
+
+.role-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.role-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 40px;
+    border-radius: 12px;
+    width: 280px;
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+    text-align: center;
+}
+
+.role-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-blue);
+}
+
+.role-card i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: var(--accent-blue);
+}
+
+/* Auth Pages */
+.back-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-btn:hover {
+    color: white;
+}
+
+.form-container,
+.content-box {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid var(--border-color);
+}
+
+.content-box {
+    max-width: 1000px;
+}
+
+/* Wider for tables/forms */
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.tab.active {
+    color: var(--accent-purple);
+    border-bottom: 2px solid var(--accent-purple);
+    margin-bottom: -2px;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.input-group input,
+.input-group select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+}
+
+/* Clear Input Logic */
+.clear-input {
+    position: absolute;
+    right: 12px;
+    top: 38px;
+    /* Adjusted for label */
+    color: var(--text-muted);
+    cursor: pointer;
+    display: none;
+    /* Hidden by default */
+}
+
+.input-group input:valid+.clear-input {
+    /* Simple CSS trick: if input has content (required) valid might trigger, 
+       but for true interaction we usually use JS. I'll rely on JS/CSS combo or just always show if typed.
+       For now, let's position it correctly. If no label, top is diff.
+    */
+}
+
+.input-group:not(:has(label)) .clear-input {
+    top: 15px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: var(--grad-2);
+    color: white;
+    margin-top: 10px;
+}
+
+.secondary-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* Dashboard Modules */
+.dash-modules {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.module-card {
+    width: 250px;
+    height: 150px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.module-card:hover {
+    transform: scale(1.05);
+}
+
+.module-card i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.gradient-1 {
+    background: var(--grad-1);
+}
+
+.gradient-2 {
+    background: var(--grad-2);
+}
+
+.gradient-3 {
+    background: var(--grad-3);
+}
+
+/* Add Student Form */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+#subject-inputs-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    background: #0f172a55;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+#subject-inputs-container input {
+    width: 100%;
+}
+
+/* Table */
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #1e293b;
+    color: var(--accent-blue);
+}
+
+tr:hover {
+    background-color: #1e293b55;
+}
+
+tr.highlight-row {
+    background-color: #3b82f644;
+    /* Blue tint */
+    border-left: 4px solid var(--accent-blue);
+}
+
+/* Advanced Filters */
+.advanced-filters {
+    background: #0f172a55;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.advanced-filters select,
+.advanced-filters input {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+}
+
+
+.summary-footer {
+    padding: 15px;
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-blue);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    animation: scaleIn 0.2s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    margin-top: 0;
+}
+
+/* Name Selection prevent for long press */
+.prevent-select {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
