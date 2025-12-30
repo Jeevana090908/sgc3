@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calc - Student Grade System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+
+    <div class="app-container">
+        <!-- HEADER / NAVIGATION -->
+        <header id="main-header" class="hidden">
+            <h1 class="logo">Grade<span class="highlight">Calc</span></h1>
+            <nav>
+                <button id="logout-btn" class="nav-btn">Logout</button>
+            </nav>
+        </header>
+
+        <!-- PAGE: INTRO -->
+        <section id="page-intro" class="page active">
+            <div class="intro-content">
+                <h1 class="main-title">Welcome to GradeCalc</h1>
+                <p class="subtitle">Select your role to continue</p>
+                <div class="role-cards">
+                    <div class="card role-card" onclick="app.navigateTo('login-teacher')">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                        <h2>Teacher</h2>
+                        <p>Manage students & marks</p>
+                    </div>
+                    <div class="card role-card" onclick="app.navigateTo('login-student')">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <h2>Student</h2>
+                        <p>View your progress</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: TEACHER LOGIN/SIGNUP -->
+        <section id="page-login-teacher" class="page">
+            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="form-container">
+                <h2>Teacher Portal</h2>
+                <div class="tabs">
+                    <button class="tab active" onclick="app.toggleAuthTab('teacher', 'login')">Login</button>
+                    <button class="tab" onclick="app.toggleAuthTab('teacher', 'signup')">Signup</button>
+                </div>
+
+                <form id="teacher-login-form" class="auth-form active">
+                    <div class="input-group">
+                        <input type="text" id="t-login-user" placeholder="Username" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('t-login-user')"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="t-login-pass" placeholder="Password" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('t-login-pass')"></i>
+                    </div>
+                    <button type="submit" class="action-btn">Login</button>
+                </form>
+
+                <form id="teacher-signup-form" class="auth-form">
+                    <div class="input-group">
+                        <input type="text" id="t-signup-user" placeholder="Choose Username" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('t-signup-user')"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="t-signup-pass" placeholder="Choose Password" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('t-signup-pass')"></i>
+                    </div>
+                    <button type="submit" class="action-btn">Sign Up</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PAGE: STUDENT LOGIN/SIGNUP -->
+        <section id="page-login-student" class="page">
+            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="form-container">
+                <h2>Student Portal</h2>
+                <div class="tabs">
+                    <button class="tab active" onclick="app.toggleAuthTab('student', 'login')">Login</button>
+                    <button class="tab" onclick="app.toggleAuthTab('student', 'signup')">Signup</button>
+                </div>
+
+                <form id="student-login-form" class="auth-form active">
+                    <div class="input-group">
+                        <input type="text" id="s-login-id" placeholder="Student ID" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('s-login-id')"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="s-login-pass" placeholder="Password" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('s-login-pass')"></i>
+                    </div>
+                    <button type="submit" class="action-btn">Login</button>
+                </form>
+
+                <form id="student-signup-form" class="auth-form">
+                    <div class="input-group">
+                        <input type="text" id="s-signup-id" placeholder="Student ID" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('s-signup-id')"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="s-signup-name" placeholder="Full Name" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('s-signup-name')"></i>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="s-signup-pass" placeholder="Create Password" required>
+                        <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('s-signup-pass')"></i>
+                    </div>
+                    <button type="submit" class="action-btn">Sign Up</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PAGE: TEACHER DASHBOARD -->
+        <section id="page-teacher-dash" class="page">
+            <div class="dashboard-header">
+                <h2>Teacher Dashboard</h2>
+            </div>
+            <div class="dash-modules">
+                <div class="module-card gradient-1" onclick="app.navigateTo('add-student')">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <span>Add Student Marks</span>
+                </div>
+                <div class="module-card gradient-2" onclick="app.navigateTo('view-grades')">
+                    <i class="fa-solid fa-table-list"></i>
+                    <span>View Student Grades</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: ADD STUDENT MARKS -->
+        <section id="page-add-student" class="page">
+            <button class="back-btn" onclick="app.navigateTo('teacher-dash')"><i class="fa-solid fa-arrow-left"></i>
+                Back to Dashboard</button>
+            <div class="content-box">
+                <h2>Add New Student</h2>
+                <form id="add-student-form">
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <label>Student ID</label>
+                            <input type="text" id="as-id" required>
+                            <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('as-id')"></i>
+                        </div>
+                        <div class="input-group">
+                            <label>Name</label>
+                            <input type="text" id="as-name" required>
+                            <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('as-name')"></i>
+                        </div>
+                        <div class="input-group">
+                            <label>Branch</label>
+                            <select id="as-branch" required>
+                                <option value="" disabled selected>Select Branch</option>
+                                <option value="CSE">CSE</option>
+                                <option value="CSD">CSD</option>
+                                <option value="CAI">CAI</option>
+                                <option value="AIDS">AIDS</option>
+                                <option value="ECM">ECM</option>
+                                <option value="ECE">ECE</option>
+                                <option value="EEE">EEE</option>
+                                <option value="IT">IT</option>
+                                <option value="MECH">MECH</option>
+                                <option value="CIVIL">CIVIL</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Year</label>
+                            <select id="as-year" required>
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>Section</label>
+                            <input type="text" id="as-section" required>
+                            <i class="fa-solid fa-xmark clear-input" onclick="app.clearInput('as-section')"></i>
+                        </div>
+                        <div class="input-group">
+                            <label>No. of Subjects</label>
+                            <input type="number" id="as-subjects-count" min="1" max="10" required>
+                        </div>
+                    </div>
+
+                    <button type="button" class="action-btn secondary-btn"
+                        onclick="app.generateSubjectInputs()">Generate Subject Boxes</button>
+
+                    <div id="subject-inputs-container"></div>
+
+                    <button type="submit" class="action-btn hidden" id="btn-add-student-final">Add Student</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PAGE: VIEW GRADES (SHARED) -->
+        <section id="page-view-grades" class="page">
+            <button class="back-btn" onclick="app.goBack()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+            <div class="content-box">
+                <h2>Student Grades</h2>
+
+                <div class="filter-controls">
+                    <button class="filter-btn gradient-1" onclick="app.filterStudents('rank-high')">Higher to Lower
+                        (Rank)</button>
+                    <button class="filter-btn gradient-2" onclick="app.filterStudents('failed')">See Failed
+                        Students</button>
+                    <button class="filter-btn gradient-3" onclick="app.filterStudents('all')">View All</button>
+                </div>
+
+                <!-- NEW FILTERS: Branch & Section -->
+                <div class="advanced-filters filter-controls">
+                    <select id="filter-branch">
+                        <option value="">All Branches</option>
+                        <option value="CSE">CSE</option>
+                        <option value="CSD">CSD</option>
+                        <option value="CAI">CAI</option>
+                        <option value="AIDS">AIDS</option>
+                        <option value="ECM">ECM</option>
+                        <option value="ECE">ECE</option>
+                        <option value="EEE">EEE</option>
+                        <option value="IT">IT</option>
+                        <option value="MECH">MECH</option>
+                        <option value="CIVIL">CIVIL</option>
+                    </select>
+                    <input type="text" id="filter-section" placeholder="Section (e.g. A)" style="width: 150px;">
+                    <button class="filter-btn secondary-btn" onclick="app.applyAdvancedFilter()">Filter Class</button>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <button id="btn-back-to-add" class="action-btn gradient-1 hidden" style="width: auto;"
+                        onclick="app.navigateTo('add-student')">
+                        <i class="fa-solid fa-plus"></i> Add Another Student
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Branch</th>
+                                <th>Year/Sec</th>
+                                <th>Total</th>
+                                <th>CGPA</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="grades-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE: STUDENT DASHBOARD -->
+        <section id="page-student-dash" class="page">
+            <div class="dashboard-header">
+                <h2>My Dashboard</h2>
+                <h3 id="student-welcome-name">Welcome</h3>
+            </div>
+            <div class="dash-modules">
+                <div class="module-card gradient-2" onclick="app.navigateTo('view-grades', { highlightMe: true })">
+                    <i class="fa-solid fa-user-check"></i>
+                    <span>Check My Status</span>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>My Performance</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Marks</th>
+                                <th>Grade</th>
+                            </tr>
+                        </thead>
+                        <tbody id="my-marks-body">
+                            <!-- JS populated -->
+                        </tbody>
+                    </table>
+                    <div class="summary-footer" id="my-summary-footer">
+                        <!-- Total/CGPA -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3>Remove Student?</h3>
+            <p>Are you sure you want to remove <span id="delete-student-name" class="highlight"></span>?</p>
+            <div class="modal-actions">
+                <button class="action-btn secondary-btn" onclick="app.closeModal()">Cancel</button>
+                <button class="action-btn gradient-3" id="confirm-delete-btn">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" type="module"></script>
+</body>
+
+</html>
